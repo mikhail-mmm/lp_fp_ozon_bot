@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Project files
+settings.py
+parser_ozon/chromedriver/
+
+# System files
+.DS_Store
