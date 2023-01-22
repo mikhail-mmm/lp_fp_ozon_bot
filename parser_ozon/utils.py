@@ -11,7 +11,7 @@ def product_amount_edit(product_amount):
             product_amount_new += simbol
     return int(product_amount_new)
 
-def product_info_edit(product_carts):
+def product_filter(product_carts):
     product_names = []
     rating_list = []
     reviews_amount = []
@@ -38,7 +38,7 @@ def product_info_edit(product_carts):
         product_names.append(product_name)
     return product_names, rating_list, reviews_amount
 
-def price_info_edit(price_carts):
+def price_filter(price_carts):
     
     prices_with_card = []
     prices_without_card = []

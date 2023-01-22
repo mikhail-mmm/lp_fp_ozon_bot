@@ -1,4 +1,4 @@
-from instruments import product_info_edit, price_info_edit, product_amount_edit
+from utils import product_filter, price_filter, product_amount_edit
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
@@ -100,11 +100,11 @@ time.sleep(1)
 product_carts = product_carts_info()
 price_carts = price_carts_info()
 
-product_names = product_info_edit(product_carts)[0]
-rating_list = product_info_edit(product_carts)[1]
-reviews_amount = product_info_edit(product_carts)[2]
-prices_with_card = price_info_edit(price_carts)[0]
-prices_without_card = price_info_edit(price_carts)[1]
+product_names = product_filter(product_carts)[0]
+rating_list = product_filter(product_carts)[1]
+reviews_amount = product_filter(product_carts)[2]
+prices_with_card = price_filter(price_carts)[0]
+prices_without_card = price_filter(price_carts)[1]
 
 page_amount = get_page_amount()[0]
 product_amount = get_page_amount()[1]
@@ -124,11 +124,11 @@ for j in range(2, (page_amount + 1)):
     product_carts = product_carts_info()
     price_carts = price_carts_info()
 
-    product_names.extend(product_info_edit(product_carts)[0])
-    rating_list.extend(product_info_edit(product_carts)[1])
-    reviews_amount.extend(product_info_edit(product_carts)[2])
-    prices_with_card.extend(price_info_edit(price_carts)[0])
-    prices_without_card.extend(price_info_edit(price_carts)[1])
+    product_names.extend(product_filter(product_carts)[0])
+    rating_list.extend(product_filter(product_carts)[1])
+    reviews_amount.extend(product_filter(product_carts)[2])
+    prices_with_card.extend(price_filter(price_carts)[0])
+    prices_without_card.extend(price_filter(price_carts)[1])
 
     driver.close()
 
