@@ -3,9 +3,7 @@ import time
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
 
-from parser_ozon.parser_ozon import Parser_ozon
 from utils_bot import main_keyboard
-
 
 def find_product_start(update, context):
     update.message.reply_text(
@@ -24,10 +22,8 @@ def find_product_request(update, context):
 Может занять несколько минут"""
     )
     print("Parsing process...")
-    parser = Parser_ozon(user_request)
-    parser.parser()
+    time.sleep(5)
     print('Parsing completed')
-    update.message.reply_text(parser.result_parsing['product_name'][1])
     reply_keyboard = [
         ['По цене', 'По цене и рейтингу'],
         ['По рейтингу и кол-ву отзывов']

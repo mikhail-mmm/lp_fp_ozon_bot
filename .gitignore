@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# Settings files
+settings_bot.py
+parser_ozon/settings_parser.py
