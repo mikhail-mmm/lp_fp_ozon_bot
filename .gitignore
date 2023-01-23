@@ -131,3 +131,7 @@ dmypy.json
 # Settings files
 settings_bot.py
 parser_ozon/settings_parser.py
+
+# Other files
+.DS_Store
+parser_ozon/chromedriver/chromedriver
