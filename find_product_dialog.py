@@ -1,5 +1,6 @@
 import time
 
+from start_parsing import start_parser
 from telegram import ReplyKeyboardMarkup, ReplyKeyboardRemove
 from telegram.ext import ConversationHandler
 
@@ -16,20 +17,16 @@ def find_product_start(update, context):
 
 def find_product_request(update, context):
     user_request = update.message.text
+    chat_id = str(update.message.chat['id'])
     context.user_data["find_product"] = {"request": user_request}
-    update.message.reply_text(
-        """Выполняется сбор информации. Ожидайте...
-Может занять несколько минут"""
-    )
+    start_parser.send(chat_id, user_request)
     print("Parsing process...")
-    time.sleep(5)
-    print('Parsing completed')
     reply_keyboard = [
         ['По цене', 'По цене и рейтингу'],
         ['По рейтингу и кол-ву отзывов']
     ]
     update.message.reply_text(
-        'Сбор данных завершен! Выберите фильтр',
+        'Пока идет сбор данных. Выберите фильтр',
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
     )
     return "filters"
@@ -37,39 +34,30 @@ def find_product_request(update, context):
 def find_product_filters(update, context):
     context.user_data["find_product"]["filters"] = update.message.text
     update.message.reply_text(
-        "Применяем фильтр..."
+        "Фильтр выбран!"
     )
-    print('Filtering')
-    time.sleep(5)
-    update.message.reply_text(
-        format_output()
-    )
+    time.sleep(2)
     reply_keyboard = [["Далее"]]
     update.message.reply_text(
-        """Посмотрите полученные данные.
+        """Сбор данных может занять несколько минут.
 Для продолжения нажмите Далее""",
         reply_markup=ReplyKeyboardMarkup(reply_keyboard, one_time_keyboard=True)
     )
-    return "choise"
+    return "close"
 
-def find_product_choise(update, context):
+def find_product_close(update, context):
     update.message.reply_text(
-        """Выберите товары которые хотите добавить в избранное
-Формат ввода: Номер|Пробел|Номер
-Пример: 1 3 4 9""",
-        reply_markup=ReplyKeyboardRemove()
+        """Для просмотра результата Вашего запроса
+нажмите клавишу 'Показать последний результат'.""",
+        reply_markup=main_keyboard()
     )
-    return "alarm"
-
-def find_product_alarm(update, context):
-    context.user_data["find_product"]["favorite_product"] = update.message.text
-    update.message.reply_text("Выполнено")
     user_data = format_data(context.user_data)
     update.message.reply_text(
         user_data,
         reply_markup=main_keyboard()
     )
     return ConversationHandler.END
+
     
 def find_product_dontknow(update, context):
     update.message.reply_text('Неправильный формат ввода')
@@ -80,6 +68,6 @@ def format_output(data='Данные'):
 def format_data(user_data):
     text_message = f"""
 {user_data["find_product"]["request"]},
-{user_data["find_product"]["filters"]},
-{user_data["find_product"]["favorite_product"]}"""
+{user_data["find_product"]["filters"]}.
+"""
     return text_message

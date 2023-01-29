@@ -1,3 +1,5 @@
+import os
+from parser_ozon.settings_parser import USER_DATA_PATH
 from telegram import ParseMode
 from utils_bot import main_keyboard
 
@@ -25,3 +27,14 @@ def help_message(update, context):
 
 def answer_text(update, context):
     update.message.reply_text('Воспользуйся командами из /help, или выбери нужный пункт на клавиатуре внизу экрана.')
+
+def last_request(update, context):
+    chat_id = str(update.message.chat['id'])
+    file_name = f'{USER_DATA_PATH}user_{chat_id}.csv'
+    if os.path.isfile(file_name) == False:
+        update.message.reply_text('Сбор данных еще не закончен...', reply_markup=main_keyboard())
+    else:
+        update.message.reply_text('Complete!', reply_markup=main_keyboard())
+
+def clear_data(update, context):
+    update.message.reply_text('Функция пока недоступна.', reply_markup=main_keyboard())
