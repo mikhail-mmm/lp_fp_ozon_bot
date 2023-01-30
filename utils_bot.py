@@ -1,8 +1,8 @@
-from telegram import ReplyKeyboardMarkup, KeyboardButton
+from telegram import ReplyKeyboardMarkup
 
 def main_keyboard():
     return ReplyKeyboardMarkup([
         ['Поиск продукта на OZON'],
-        ['Показать найденные товары', "Очистить данные по товарам"],
+        ['Показать последний результат', 'Очистить данные по товарам'],
         ['Справка']
     ])
