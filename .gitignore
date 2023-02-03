@@ -1,3 +1,13 @@
+# Settings files
+settings_bot.py
+parser_ozon/settings_parser.py
+
+# Other files
+.DS_Store
+parser_ozon/chromedriver/chromedriver
+users_data/
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,12 +137,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# Settings files
-settings_bot.py
-parser_ozon/settings_parser.py
-
-# Other files
-.DS_Store
-parser_ozon/chromedriver/chromedriver
-users_data/

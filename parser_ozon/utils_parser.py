@@ -27,13 +27,13 @@ def product_filter(product_carts):
                 if 'бонус' not in characteristic:
                     presence_reviews = True
                     review_and_rating = characteristic.split()
-                    rating_list.append(review_and_rating[0])
-                    reviews_amount.append(review_and_rating[1])
+                    rating_list.append(float(review_and_rating[0]))
+                    reviews_amount.append(int(review_and_rating[1]))
             else:
                 presence_reviews = False
         if presence_reviews == False:
-            reviews_amount.append('0')
-            rating_list.append('0')
+            reviews_amount.append(0)
+            rating_list.append(0.0)
 
         product_names.append(product_name)
     return product_names, rating_list, reviews_amount
@@ -46,11 +46,11 @@ def price_filter(price_carts):
     for price_cart in price_carts:
         prices = price_cart.split('\n')
         if prices[1] == 'c Ozon Картой':
-            prices_with_card.append(price_edit(prices[0]))
-            prices_without_card.append(price_edit(prices[2]))
+            prices_with_card.append(float(price_edit(prices[0])))
+            prices_without_card.append(float(price_edit(prices[2])))
         else:
-            prices_without_card.append(price_edit(prices[0]))
-            prices_with_card.append('None')
+            prices_without_card.append(float(price_edit(prices[0])))
+            prices_with_card.append(0.0)
     
     return prices_with_card, prices_without_card
         

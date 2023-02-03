@@ -70,7 +70,7 @@ class Parser:
                         url = url.get_attribute('href')
                     except NoSuchElementException:
                         continue
-                    self.product_url.append(url)
+                    self.product_url.append(str(url))
                     break
             return self.product_url
 
@@ -156,27 +156,36 @@ class Parser:
             prices_without_card.extend(price_filter(self.price_carts)[1])
 
             driver.close()
-        # print(product_names)
-        # print(rating_list)
-        # print(reviews_amount)
-        # print(prices_with_card)
-        # print(prices_without_card)
-        # print(len(product_names))
-        # print(len(rating_list))
-        # print(len(reviews_amount))
-        # print(len(prices_with_card))
-        # print(len(prices_without_card))
-        # print(product_amount)
 
         for i in range(0, (product_amount - 1)):
+            triger = 0
+            find_word = 0
             product_data = {}
-            product_data['product_name'] = product_names[i]
-            product_data['url'] = product_url[i]
-            product_data['rating'] = rating_list[i]
-            product_data['amount_review'] = reviews_amount[i]
-            product_data['price_with_card'] = prices_with_card[i]
-            product_data['price_without_card'] = prices_without_card[i]
-            self.parsing_result.append(product_data)
+            if 'для' in product_names[i].lower():
+                words = product_names[i].split()
+                for word in words:
+                    if word.lower() == '3d':
+                        find_word += 1
+                    elif word.lower() == 'для':
+                        triger += 1
+                    else:
+                        continue
+                    if find_word > 0 and triger == 0:
+                        product_data['product_name'] = product_names[i]
+                        product_data['url'] = product_url[i]
+                        product_data['rating'] = rating_list[i]
+                        product_data['amount_review'] = reviews_amount[i]
+                        product_data['price_with_card'] = prices_with_card[i]
+                        product_data['price_without_card'] = prices_without_card[i]
+                        self.parsing_result.append(product_data)
+            else:
+                product_data['product_name'] = product_names[i]
+                product_data['url'] = product_url[i]
+                product_data['rating'] = rating_list[i]
+                product_data['amount_review'] = reviews_amount[i]
+                product_data['price_with_card'] = prices_with_card[i]
+                product_data['price_without_card'] = prices_without_card[i]
+                self.parsing_result.append(product_data)
         return self.parsing_result
 
     def seve_data(self):
@@ -187,14 +196,3 @@ class Parser:
             writer.writeheader()
             for el in self.parsing_result:
                 writer.writerow(el)
-
-# dramatiq.set_broker(RedisBroker())
-
-# @dramatiq.actor
-# def start_parser(chat_id='123456', user_request='3D принтер'):
-#     parser = Parser(chat_id, user_request)
-#     parser.parser_ozon()
-#     parser.seve_data()
-
-# if __name__ == '__main__':
-#     start_parser()
