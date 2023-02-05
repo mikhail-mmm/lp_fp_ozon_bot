@@ -4,12 +4,14 @@ def price_edit(price):
     price_new = price_new[:-1]
     return price_new
 
+
 def product_amount_edit(product_amount):
     product_amount_new = ''
     for simbol in product_amount:
         if simbol in '1234567890':
             product_amount_new += simbol
     return int(product_amount_new)
+
 
 def product_filter(product_carts):
     product_names = []
@@ -31,15 +33,16 @@ def product_filter(product_carts):
                     reviews_amount.append(int(review_and_rating[1]))
             else:
                 presence_reviews = False
-        if presence_reviews == False:
+        if presence_reviews is False:
             reviews_amount.append(0)
             rating_list.append(0.0)
 
         product_names.append(product_name)
     return product_names, rating_list, reviews_amount
 
+
 def price_filter(price_carts):
-    
+
     prices_with_card = []
     prices_without_card = []
 
@@ -51,6 +54,5 @@ def price_filter(price_carts):
         else:
             prices_without_card.append(float(price_edit(prices[0])))
             prices_with_card.append(0.0)
-    
+
     return prices_with_card, prices_without_card
-        

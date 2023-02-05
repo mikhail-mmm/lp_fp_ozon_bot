@@ -15,4 +15,3 @@ XPATH_LIST_AMOUNT_PRODUCT = [
     '/html/body/div[1]/div/div[1]/div[2]/div[1]/div/div[1]/div/div/span',
     '/html/body/div[1]/div/div/div[2]/div[1]/div/div[1]/div/div/span'
 ]
-

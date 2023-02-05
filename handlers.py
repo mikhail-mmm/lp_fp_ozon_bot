@@ -14,6 +14,7 @@ message_help = """Основные команды бота:
 <b>Очистить данные по товарам</b>:
 """
 
+
 def greet_user(update, context):
     print('Бот стартовал!')
     update.message.reply_text(f'''
@@ -21,11 +22,14 @@ def greet_user(update, context):
 {message_help}''', reply_markup=main_keyboard(), parse_mode=ParseMode.HTML)
     print(update.message.chat['id'])
 
+
 def help_message(update, context):
     update.message.reply_text(message_help, reply_markup=main_keyboard(), parse_mode=ParseMode.HTML)
 
+
 def answer_text(update, context):
     update.message.reply_text('Воспользуйся командами из /help, или выбери нужный пункт на клавиатуре внизу экрана.')
+
 
 def last_request(update, context):
     try:
@@ -33,7 +37,7 @@ def last_request(update, context):
         filter = 'По цене и рейтингу'
         chat_id = str(update.message.chat['id'])
         file_name = f'{USER_DATA_PATH}user_{chat_id}.csv'
-        if os.path.isfile(file_name) == False:
+        if os.path.isfile(file_name) is False:
             update.message.reply_text('Сбор данных еще не закончен...', reply_markup=main_keyboard())
         else:
             user_data = read_user_file(file_name, filter)
@@ -41,6 +45,7 @@ def last_request(update, context):
                 update.message.reply_text(el, reply_markup=main_keyboard(), parse_mode=ParseMode.HTML)
     except KeyError:
         update.message.reply_text('Вы еще не сделали ни одного запроса', reply_markup=main_keyboard())
+
 
 def clear_data(update, context):
     update.message.reply_text('Функция пока недоступна.', reply_markup=main_keyboard())

@@ -1,12 +1,14 @@
 import pandas as pd
 from telegram import ReplyKeyboardMarkup
 
+
 def main_keyboard():
     return ReplyKeyboardMarkup([
         ['Поиск продукта на OZON'],
         ['Показать последний результат', 'Очистить данные по товарам'],
         ['Справка']
     ])
+
 
 def read_user_file(file_name, filter):
     data = pd.read_csv(open(file_name, 'r'), sep=',')
@@ -32,7 +34,7 @@ def read_user_file(file_name, filter):
         amount_review = str(new_data['amount_review'].loc[new_data.index[i]])
         price_with_card = str(new_data['price_with_card'].loc[new_data.index[i]])
         price_without_card = str(new_data['price_without_card'].loc[new_data.index[i]])
-        
+
         answer = f'''
 <b>{product_name}</b>
 {url}

@@ -7,6 +7,8 @@ parser_ozon/settings_parser.py
 parser_ozon/chromedriver/chromedriver
 users_data/
 
+# VS code files
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

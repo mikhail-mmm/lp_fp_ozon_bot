@@ -1,6 +1,7 @@
 from parser_ozon.utils_parser import product_filter, price_filter, product_amount_edit
 
 from parser_ozon import xpath_ozon
+from parser_ozon import xpath_ya
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
@@ -10,6 +11,7 @@ from parser_ozon.settings_parser import CHR_PATH, USER_DATA_PATH
 
 import csv
 import time
+
 
 class Parser:
 
@@ -33,8 +35,8 @@ class Parser:
                         page_amount = product_amount // 35
                     break
                 except NoSuchElementException:
-                        page_amount = None
-                        continue
+                    page_amount = None
+                    continue
             return page_amount, product_amount
 
         def product_carts_info():
@@ -83,13 +85,13 @@ class Parser:
 
                 driver.get('https://ya.ru')
                 time.sleep(1)
-                ya_search_box = driver.find_element(By.XPATH, '/html/body/main/div[2]/form/div[2]/div/input')
+                ya_search_box = driver.find_element(By.XPATH, xpath_ya.FIND_BOX_YA)
                 ya_search_box.send_keys(f'ozon {search_request}', Keys.RETURN)
-                window_ya = driver.window_handles[0]
                 time.sleep(1)
 
                 for i in range(1, 5):
-                    unknowed_link = driver.find_element(By.XPATH, f'/html/body/main/div[2]/div[2]/div[1]/div[1]/ul/li[{i}]/div/div[1]/a/h2/span')
+                    unknowed_xpath = xpath_ya.OZON_LINK + f'li[{i}]/div/div[1]/a/h2/span'
+                    unknowed_link = driver.find_element(By.XPATH, unknowed_xpath)
                     if 'OZON' not in unknowed_link.text:
                         continue
                     else:
@@ -102,7 +104,6 @@ class Parser:
         ozon_link.click()
         time.sleep(1)
 
-        # Без этой магии selenium не берет текущий url
         driver.switch_to.window(driver.window_handles[0])
         driver.switch_to.window(driver.window_handles[1])
         time.sleep(1)
@@ -138,7 +139,7 @@ class Parser:
             self.product_carts = []
             self.price_carts = []
 
-            next_url = current_url + f'?page={i}&tf_state=sdfjkhskjdhfkjshf'
+            next_url = current_url + f'?page={i}&tf_state='
             options = Options()
             driver = webdriver.Chrome(chrome_options=options, executable_path=CHR_PATH)
             driver.get(next_url)

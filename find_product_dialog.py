@@ -6,6 +6,7 @@ from telegram.ext import ConversationHandler
 
 from utils_bot import main_keyboard
 
+
 def find_product_start(update, context):
     update.message.reply_text(
         """Введите наименование искомого товара
@@ -14,6 +15,7 @@ def find_product_start(update, context):
         reply_markup=ReplyKeyboardRemove()
     )
     return "request"
+
 
 def find_product_request(update, context):
     user_request = update.message.text
@@ -31,6 +33,7 @@ def find_product_request(update, context):
     )
     return "filters"
 
+
 def find_product_filters(update, context):
     context.user_data["find_product"]["filters"] = update.message.text
     update.message.reply_text(
@@ -45,6 +48,7 @@ def find_product_filters(update, context):
     )
     return "close"
 
+
 def find_product_close(update, context):
     update.message.reply_text(
         """Для просмотра результата Вашего запроса
@@ -58,12 +62,14 @@ def find_product_close(update, context):
     )
     return ConversationHandler.END
 
-    
+
 def find_product_dontknow(update, context):
     update.message.reply_text('Неправильный формат ввода')
 
+
 def format_output(data='Данные'):
     return data
+
 
 def format_data(user_data):
     text_message = f"""
